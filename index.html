@@ -8,48 +8,63 @@
   body {
     margin: 0; padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to top, #0d1b2a, #1b263b);
+    background: linear-gradient(to top, #0d1b2a, #1b263b 60%, #415a77 100%);
     height: 100vh; overflow: hidden; color: white;
-    display: flex; justify-content: center; align-items: center; flex-direction: column;
-    animation: bgShift 15s infinite alternate;
+    display: flex; justify-content: center; align-items: flex-start; flex-direction: column;
+    animation: bgShift 20s infinite alternate;
   }
 
   @keyframes bgShift {
-    0% { background: linear-gradient(to top, #0d1b2a, #1b263b); }
-    100% { background: linear-gradient(to top, #1b263b, #0d1b2a); }
+    0% { background: linear-gradient(to top, #0d1b2a, #1b263b 60%, #415a77 100%); }
+    100% { background: linear-gradient(to top, #1b263b, #0d1b2a 60%, #2d3a4d 100%); }
   }
 
-  /* SVG Köprü */
+  /* Kaydırılan yazı */
+  .scroll-text {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.8;
+    animation: scrollUp 40s linear forwards;
+    white-space: pre-line;
+    text-shadow: 0 0 10px #00000077;
+  }
+  @keyframes scrollUp {
+    0% { top: 100%; }
+    100% { top: -120%; }
+  }
+
+  /* Köprü SVG */
   .bridge {
     position: absolute;
-    bottom: 0;
+    bottom: 60px;
     width: 100%;
-    height: 180px;
+    height: 160px;
+    opacity: 0.9;
   }
-  .bridge svg {
-    width: 100%;
-    height: 100%;
-  }
+  .bridge svg { width: 100%; height: 100%; }
   .bridge line {
     stroke: #ffffffcc;
     stroke-width: 2;
     animation: bridgeGlow 4s infinite alternate;
   }
   @keyframes bridgeGlow {
-    0% { stroke: #ffffff55; }
+    0% { stroke: #ffffff44; }
     100% { stroke: #ffd60a; }
   }
 
   /* Dalga */
   .wave {
     position: absolute; bottom: 0; width: 200%; height: 150px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.07);
     border-radius: 100% 100% 0 0;
-    animation: waveMove 8s linear infinite;
+    animation: waveMove 10s linear infinite;
   }
   .wave:nth-child(2) {
-    bottom: 20px; opacity: 0.5;
-    animation-duration: 12s; animation-direction: reverse;
+    bottom: 15px; opacity: 0.5;
+    animation-duration: 14s; animation-direction: reverse;
   }
   @keyframes waveMove {
     0% { transform: translateX(0); }
@@ -59,38 +74,19 @@
   /* Kalpler */
   .heart {
     position: fixed; pointer-events: none; opacity: 0.7;
-    font-size: 24px; animation: fall 6s linear forwards;
+    font-size: 24px; animation: fall 8s linear forwards;
   }
   @keyframes fall {
     0% { transform: translateY(-50px) rotate(0deg) scale(0.8); opacity: 1; }
     100% { transform: translateY(100vh) rotate(360deg) scale(1); opacity: 0; }
   }
 
-  /* Mesaj */
-  .message {
-    max-width: 600px;
-    text-align: center;
-    font-size: 21px;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fadeIn 3s forwards 1s;
-  }
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  /* Özür Dilerim */
-  .apology {
-    margin-top: 20px;
-    font-size: 30px;
-    font-weight: bold;
-    color: #ffd60a;
-    text-shadow: 0 0 10px #ffd60a;
-    animation: glow 2s infinite alternate;
-  }
-  @keyframes glow {
-    0% { text-shadow: 0 0 5px #ffd60a; }
-    100% { text-shadow: 0 0 20px #ffd60a; }
+  /* Sis efekti */
+  .fog {
+    position: absolute;
+    bottom: 0; width: 100%; height: 100px;
+    background: linear-gradient(to top, rgba(255,255,255,0.2), transparent);
+    filter: blur(10px);
   }
 </style>
 </head>
@@ -98,30 +94,39 @@
 
 <script>
   // Kalpler
-  const emojis = ['💖','🌹','💕'];
+  const emojis = ['💖','🌹','💕','💘'];
   setInterval(()=>{
     const el=document.createElement('div');
     el.className='heart';
     el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
     el.style.left=Math.random()*100+'vw';
-    el.style.fontSize=(20+Math.random()*20)+'px';
-    el.style.animationDuration=(5+Math.random()*4)+'s';
+    el.style.fontSize=(20+Math.random()*25)+'px';
+    el.style.animationDuration=(6+Math.random()*4)+'s';
     document.body.appendChild(el);
-    setTimeout(()=>el.remove(),9000);
-  },1200);
+    setTimeout(()=>el.remove(),10000);
+  },1500);
 </script>
 
-<!-- Mesaj -->
-<div class="message">
-  Özür dilerim Sevgi… 💔<br>
-  Seni kırmak, üzmek hiç istemedim.<br>
-  Konuşmuyor olsak da seni çok merak ediyorum.<br>
-  Duygularını bilmiyorum ama şunu biliyorum…<br>
-  Adın hep kalbimde ve orası yalnızca sana ait.<br>
-  Senin yerini kimse dolduramaz… 💖
-</div>
+<!-- Kaydırılan Mesaj -->
+<div class="scroll-text">
+Sevgi… 💔
 
-<div class="apology">Özür Dilerim...</div>
+Seni kırmak, üzmek hiç istemedim.
+Konuşmuyor olsak da seni çok merak ediyorum.
+
+Bazen ne hissettiğini bilemiyorum,
+ama şunu çok iyi biliyorum…
+
+Adın hep kalbimde.
+Orası yalnızca sana ait.
+Ve senin yerini kimse dolduramaz… 💖
+
+Hayatta bazen hatalar yaparız,
+ama önemli olan kalpten özür dilemektir.
+
+Özür dilerim, Sevgi…  
+Her zaman yanındayım. 🌹
+</div>
 
 <!-- Dalga ve SVG Köprü -->
 <div class="wave"></div>
@@ -144,6 +149,9 @@
     <line x1="450" y1="150" x2="500" y2="80"/>
   </svg>
 </div>
+
+<!-- Sis -->
+<div class="fog"></div>
 
 </body>
 </html>
