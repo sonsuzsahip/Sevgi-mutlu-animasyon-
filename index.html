@@ -19,18 +19,25 @@
     100% { background: linear-gradient(to top, #1b263b, #0d1b2a); }
   }
 
-  /* Köprü */
+  /* SVG Köprü */
   .bridge {
-    position: absolute; bottom: 0;
-    width: 100%; height: 180px;
-    background: url('https://i.ibb.co/fF27j0x/istanbul-bridge-silhouette.png') center/cover no-repeat;
-    opacity: 0.85;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-    animation: bridgeLights 4s infinite alternate;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 180px;
   }
-  @keyframes bridgeLights {
-    0% { filter: drop-shadow(0 0 5px rgba(255,200,0,0.2)); }
-    100% { filter: drop-shadow(0 0 15px rgba(255,200,0,0.6)); }
+  .bridge svg {
+    width: 100%;
+    height: 100%;
+  }
+  .bridge line {
+    stroke: #ffffffcc;
+    stroke-width: 2;
+    animation: bridgeGlow 4s infinite alternate;
+  }
+  @keyframes bridgeGlow {
+    0% { stroke: #ffffff55; }
+    100% { stroke: #ffd60a; }
   }
 
   /* Dalga */
@@ -116,10 +123,27 @@
 
 <div class="apology">Özür Dilerim...</div>
 
-<!-- Dalga ve köprü -->
+<!-- Dalga ve SVG Köprü -->
 <div class="wave"></div>
 <div class="wave"></div>
-<div class="bridge"></div>
+<div class="bridge">
+  <svg viewBox="0 0 600 200" preserveAspectRatio="none">
+    <!-- Köprü Ayakları -->
+    <line x1="100" y1="200" x2="100" y2="80"/>
+    <line x1="500" y1="200" x2="500" y2="80"/>
+    <!-- Ana Kablo -->
+    <path d="M100 80 Q 300 20 500 80" stroke="#ffffffcc" stroke-width="3" fill="transparent"/>
+    <!-- Yol -->
+    <line x1="0" y1="150" x2="600" y2="150"/>
+    <!-- Işıklar -->
+    <line x1="150" y1="150" x2="100" y2="80"/>
+    <line x1="200" y1="150" x2="100" y2="80"/>
+    <line x1="250" y1="150" x2="100" y2="80"/>
+    <line x1="350" y1="150" x2="500" y2="80"/>
+    <line x1="400" y1="150" x2="500" y2="80"/>
+    <line x1="450" y1="150" x2="500" y2="80"/>
+  </svg>
+</div>
 
 </body>
 </html>
